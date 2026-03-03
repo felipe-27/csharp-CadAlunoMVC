@@ -1,4 +1,6 @@
-﻿namespace CadAlunoMVC.DAO
+﻿using System.Data.SqlClient; // biblioteca instalada no NuGet Packages
+
+namespace CadAlunoMVC.DAO
 {
     public static class ConexaoBD
     {
