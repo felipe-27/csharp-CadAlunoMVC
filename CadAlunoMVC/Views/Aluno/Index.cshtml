@@ -1,23 +1,38 @@
-﻿@model List<AlunoViewModel>
+﻿<!-- definindo tipo do objeto Model -->
+@model List<AlunoViewModel>
+
+<!-- carregando layout pre-definido -->
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Listagem de Alunos</h2>
+
+<!-- Usaremos o Bootstrap:
+    biblioteca nativa para configurações de elementos visuais -->
+
 <table class="table table-responsive">
-    <tr>
-        <th>Ações</th>
+    
+    <tr> <!-- table row -->
+
+        <th>Ações</th> <!-- table header -->
         <th>RA</th>
         <th>Nome</th>
         <th>Data de nascimento</th>
+
     </tr>
+
     @foreach (var aluno in Model)
     {
-        <tr>
-            <td></td>
+        <tr> <!-- table row -->
+
+            <td></td> <!-- table data -->
             <td>@aluno.Id</td>
             <td>@aluno.Nome</td>
             <td>@aluno.DataNascimento.ToShortDateString()</td>
+            <td>@aluno.CidadeId</td>
+            <td>@aluno.Mensalidade.ToString("c")</td>
+
         </tr>
     }
 </table>

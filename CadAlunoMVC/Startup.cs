@@ -46,7 +46,8 @@ namespace CadAlunoMVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    // define a primeira página que será executada
+                    pattern: "{controller=Aluno}/{action=Index}/{id?}");
             });
         }
     }
