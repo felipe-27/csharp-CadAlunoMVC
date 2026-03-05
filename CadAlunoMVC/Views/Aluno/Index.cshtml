@@ -1,0 +1,23 @@
+﻿@model List<AlunoViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listagem de Alunos</h2>
+<table class="table table-responsive">
+    <tr>
+        <th>Ações</th>
+        <th>RA</th>
+        <th>Nome</th>
+        <th>Data de nascimento</th>
+    </tr>
+    @foreach (var aluno in Model)
+    {
+        <tr>
+            <td></td>
+            <td>@aluno.Id</td>
+            <td>@aluno.Nome</td>
+            <td>@aluno.DataNascimento.ToShortDateString()</td>
+        </tr>
+    }
+</table>
