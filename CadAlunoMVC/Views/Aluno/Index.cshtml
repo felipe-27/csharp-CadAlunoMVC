@@ -4,9 +4,9 @@
 <!-- carregando layout pre-definido -->
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Listagem de Aluno";
 }
-
-<h2>Listagem de Alunos</h2>
+<h2>@ViewData["Title"]</h2>
 
 <!-- o link seguinte depende da existencia de:
     * uma Controller chamado Aluno
@@ -38,7 +38,9 @@
             <td>@aluno.Nome</td>
             <td>@aluno.DataNascimento.ToShortDateString()</td>
             <td>@aluno.CidadeId</td>
-            <td>@aluno.Mensalidade.ToString("c")</td>
+
+            @{/*   "Mensalidade?"  ->  se Mensalidade != null, executa o comando à frente */}
+            <td>@aluno.Mensalidade?.ToString("c")</td>
 
         </tr>
     }

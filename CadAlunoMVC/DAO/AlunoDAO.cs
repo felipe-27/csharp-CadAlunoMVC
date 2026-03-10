@@ -29,7 +29,12 @@ namespace CadAlunoMVC.DAO
             SqlParameter[] parametros = new SqlParameter[5];
             parametros[0] = new SqlParameter("id", aluno.Id);
             parametros[1] = new SqlParameter("nome", aluno.Nome);
-            parametros[2] = new SqlParameter("mensalidade", aluno.Mensalidade);
+
+            if (aluno.Mensalidade == null)
+                parametros[2] = new SqlParameter("mensalidade", DBNull.Value);
+            else
+                parametros[2] = new SqlParameter("mensalidade", aluno.Mensalidade);
+
             parametros[3] = new SqlParameter("cidadeId", aluno.CidadeId);
             parametros[4] = new SqlParameter("dataNascimento", aluno.DataNascimento);
             return parametros;
@@ -46,7 +51,10 @@ namespace CadAlunoMVC.DAO
             a.Nome = registro["nome"].ToString();
             a.CidadeId = Convert.ToInt32(registro["cidadeId"]);
             a.DataNascimento = Convert.ToDateTime(registro["dataNascimento"]);
-            a.Mensalidade = Convert.ToDouble(registro["mensalidade"]);
+
+            if (registro["mensalidade"] != DBNull.Value)
+                a.Mensalidade = Convert.ToDouble(registro["mensalidade"]);
+
             return a;
         }
         public AlunoViewModel Consulta(int id)
