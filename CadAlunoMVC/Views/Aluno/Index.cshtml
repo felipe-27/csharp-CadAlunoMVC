@@ -12,6 +12,8 @@
     * uma Controller chamado Aluno
     * uma Action (método) chamado create
 -->
+
+<br />
 <a href="/aluno/create">Novo Registro</a>
 <br />
 
@@ -33,7 +35,8 @@
     {
         <tr> <!-- table row -->
 
-            <td></td> <!-- table data -->
+            <!-- table data -->
+            <td><a href="/aluno/Edit?id=@aluno.Id">Editar</a> </td>
             <td>@aluno.Id</td>
             <td>@aluno.Nome</td>
             <td>@aluno.DataNascimento.ToShortDateString()</td>

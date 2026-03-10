@@ -48,12 +48,35 @@ namespace CadAlunoMVC.Controllers
             try
             {
                 AlunoDAO dao = new AlunoDAO();
-                dao.Inserir(aluno);
+
+                if (dao.Consulta(aluno.Id) == null)
+                    dao.Inserir(aluno);
+                else
+                    dao.Alterar(aluno);
+
                 return RedirectToAction("index");
             }
             catch (Exception ex)
             {
                 return View("Error", new ErrorViewModel(ex.ToString()));
+            }
+        }
+
+        public IActionResult Edit(int id)
+        {
+            try
+            {
+                AlunoDAO dao = new AlunoDAO();
+                AlunoViewModel aluno = dao.Consulta(id); // busca o aluno no banco de dados
+
+                if (aluno == null)
+                    return RedirectToAction("index");
+                else
+                    return View("Form", aluno);
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
     }
