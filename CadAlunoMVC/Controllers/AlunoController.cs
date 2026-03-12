@@ -79,5 +79,19 @@ namespace CadAlunoMVC.Controllers
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
+
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                AlunoDAO dao = new AlunoDAO();
+                dao.Excluir(id);
+                return RedirectToAction("index");
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
     }
 }

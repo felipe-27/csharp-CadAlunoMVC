@@ -28,6 +28,8 @@
         <th>RA</th>
         <th>Nome</th>
         <th>Data de nascimento</th>
+        <th>Código da Cidade</th>
+        <th>Mensalidade</th>
 
     </tr>
 
@@ -36,7 +38,8 @@
         <tr> <!-- table row -->
 
             <!-- table data -->
-            <td><a href="/aluno/Edit?id=@aluno.Id">Editar</a> </td>
+            <td><a href="/aluno/Edit?id=@aluno.Id">Editar</a> 
+            <a href="javascript:apagarAluno(@aluno.Id)">Apagar</a></td>
             <td>@aluno.Id</td>
             <td>@aluno.Nome</td>
             <td>@aluno.DataNascimento.ToShortDateString()</td>
@@ -48,3 +51,11 @@
         </tr>
     }
 </table>
+
+<script>
+    function apagarAluno(id)
+    {
+        if (confirm('Confirma a exclusão do registro?'))
+            location.href = 'aluno/Delete?id=' + id;
+    }
+</script>
