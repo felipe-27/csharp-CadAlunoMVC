@@ -9,8 +9,8 @@
 <h2>@ViewData["Title"]</h2>
 
 <!-- o link seguinte depende da existencia de:
-    * uma Controller chamado Aluno
-    * uma Action (método) chamado create
+    a) uma Controller chamada Aluno
+    b) uma Action (método) chamada create
 -->
 
 <br />
@@ -38,8 +38,10 @@
         <tr> <!-- table row -->
 
             <!-- table data -->
-            <td><a href="/aluno/Edit?id=@aluno.Id">Editar</a> 
-            <a href="javascript:apagarAluno(@aluno.Id)">Apagar</a></td>
+            <td>
+                <a href="/aluno/Edit?id=@aluno.Id">Editar</a> 
+                <a href="javascript:apagarAluno(@aluno.Id)">Apagar</a>
+            </td>
             <td>@aluno.Id</td>
             <td>@aluno.Nome</td>
             <td>@aluno.DataNascimento.ToShortDateString()</td>
