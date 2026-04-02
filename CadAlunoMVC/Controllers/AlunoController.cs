@@ -31,6 +31,7 @@ namespace CadAlunoMVC.Controllers
         {
             try
             {
+                ViewBag.Operacao = "I";
                 AlunoViewModel aluno = new AlunoViewModel();
 
                 // preencher informações direto para o usuário
@@ -43,13 +44,13 @@ namespace CadAlunoMVC.Controllers
             }
         }
 
-        public IActionResult Salvar(AlunoViewModel aluno)
+        public IActionResult Salvar(AlunoViewModel aluno, string Operacao)
         {
             try
             {
                 AlunoDAO dao = new AlunoDAO();
 
-                if (dao.Consulta(aluno.Id) == null)
+                if (Operacao == "I")
                     dao.Inserir(aluno);
                 else
                     dao.Alterar(aluno);
@@ -66,6 +67,7 @@ namespace CadAlunoMVC.Controllers
         {
             try
             {
+                ViewBag.Operacao = "A";
                 AlunoDAO dao = new AlunoDAO();
                 AlunoViewModel aluno = dao.Consulta(id); // busca o aluno no banco de dados
 

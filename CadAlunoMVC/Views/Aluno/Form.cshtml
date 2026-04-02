@@ -12,9 +12,16 @@
     -->
 
     <!-- relação entre os dois campos: "for" da label e "Name" do input -->
+    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
     <label for="Id" class="control-label">RA</label>
-    <input type="number" Name="Id" value="@Model.Id" />
-    <br />
+    @if (ViewBag.Operacao == "I")
+    {
+        <input type="number" Name="Id" value="@Model.Id" class="form-control" />
+    }
+    else
+    {
+        <input type="number" Name="Id" value="@Model.Id" class="form-control disabled" readonly />
+    }
 
     <label for="Nome" class="control-label">Nome do aluno</label>
     <input type="text" Name="Nome" value="@Model.Nome" />
