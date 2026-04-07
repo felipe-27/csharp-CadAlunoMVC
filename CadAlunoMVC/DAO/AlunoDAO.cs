@@ -9,20 +9,24 @@ namespace CadAlunoMVC.DAO
     public class AlunoDAO
     {
         public void Inserir(AlunoViewModel aluno)
-        {
+        { /*
             string sql =
             "insert into alunos(id, nome, mensalidade, cidadeId, dataNascimento)" +
             "values ( @id, @nome, @mensalidade, @cidadeId, @dataNascimento)";
             HelperDAO.ExecutaSQL(sql, CriaParametros(aluno));
+            */
+            HelperDAO.ExecutaProc("spIncluiAluno", CriaParametros(aluno));
         }
         public void Alterar(AlunoViewModel aluno)
-        {
+        { /*
             string sql =
             "update alunos set nome = @nome, " +
             "mensalidade = @mensalidade, " +
             "cidadeId = @cidadeId," +
             "dataNascimento = @dataNascimento where id = @id";
             HelperDAO.ExecutaSQL(sql, CriaParametros(aluno));
+            */
+            HelperDAO.ExecutaProc("spAlteraAluno", CriaParametros(aluno));
         }
         private SqlParameter[] CriaParametros(AlunoViewModel aluno)
         {
@@ -40,9 +44,16 @@ namespace CadAlunoMVC.DAO
             return parametros;
         }
         public void Excluir(int id)
-        {
+        { /*
             string sql = "delete alunos where id =" + id;
-            HelperDAO.ExecutaSQL(sql, null);
+            HelperDAO.ExecutaSQL(sql, null); 
+            */
+
+            var p = new SqlParameter[]
+            {
+                new SqlParameter("id", id)
+            };
+            HelperDAO.ExecutaProc("spExcluiAluno", p);
         }
         private AlunoViewModel MontaAluno(DataRow registro)
         {
@@ -58,19 +69,39 @@ namespace CadAlunoMVC.DAO
             return a;
         }
         public AlunoViewModel Consulta(int id)
-        {
+        { /*
             string sql = "select * from alunos where id = " + id;
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
             if (tabela.Rows.Count == 0)
                 return null;
             else
                 return MontaAluno(tabela.Rows[0]);
+            */
+
+            var p = new SqlParameter[]
+            {
+                new SqlParameter("id", id)
+            };
+            DataTable tabela = HelperDAO.ExecutaProcSelect("spConsultaAluno", p);
+            if (tabela.Rows.Count == 0)
+                return null;
+            else
+                return MontaAluno(tabela.Rows[0]);
         }
+
         public List<AlunoViewModel> Listagem()
-        {
+        { /*
             List<AlunoViewModel> lista = new List<AlunoViewModel>();
             string sql = "select * from alunos order by nome";
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            foreach (DataRow registro in tabela.Rows)
+                lista.Add(MontaAluno(registro));
+            return lista;
+            */
+
+            List<AlunoViewModel> lista = new List<AlunoViewModel>();
+            DataTable tabela = HelperDAO.ExecutaProcSelect("spListagemAlunos", null);
+
             foreach (DataRow registro in tabela.Rows)
                 lista.Add(MontaAluno(registro));
             return lista;
