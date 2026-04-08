@@ -33,9 +33,12 @@ namespace CadAlunoMVC.Controllers
             {
                 ViewBag.Operacao = "I";
                 AlunoViewModel aluno = new AlunoViewModel();
+                AlunoDAO dao = new AlunoDAO();
 
                 // preencher informações direto para o usuário
+                aluno.Id = dao.ProximoId();
                 aluno.DataNascimento = DateTime.Now;
+                    
                 return View("Form", aluno);
             }
             catch (Exception ex)

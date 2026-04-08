@@ -105,5 +105,19 @@ namespace CadAlunoMVC.DAO
                 lista.Add(MontaAluno(registro));
             return lista;
         }
+        public int ProximoId()
+        { /*
+            string sql = "select isnull(max(id) +1, 1) as 'MAIOR' from alunos";
+            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
+            */
+
+            var p = new SqlParameter[]
+            {
+                new SqlParameter("tabela", "alunos")
+            };
+            DataTable tabela = HelperDAO.ExecutaProcSelect("spProximoId", p);
+            return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
+        }
     }
 }
