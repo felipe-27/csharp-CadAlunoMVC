@@ -8,6 +8,34 @@ namespace CadAlunoMVC.DAO
 {
     public class AlunoDAO
     {
+        private SqlParameter[] CriaParametros(AlunoViewModel aluno)
+        {
+            SqlParameter[] parametros = new SqlParameter[5];
+            parametros[0] = new SqlParameter("id", aluno.Id);
+            parametros[1] = new SqlParameter("nome", aluno.Nome);
+
+            if (aluno.Mensalidade == null)
+                parametros[2] = new SqlParameter("mensalidade", DBNull.Value);
+            else
+                parametros[2] = new SqlParameter("mensalidade", aluno.Mensalidade);
+
+            parametros[3] = new SqlParameter("cidadeId", aluno.CidadeId);
+            parametros[4] = new SqlParameter("dataNascimento", aluno.DataNascimento);
+            return parametros;
+        }
+        private AlunoViewModel MontaAluno(DataRow registro)
+        {
+            AlunoViewModel a = new AlunoViewModel();
+            a.Id = Convert.ToInt32(registro["id"]);
+            a.Nome = registro["nome"].ToString();
+            a.CidadeId = Convert.ToInt32(registro["cidadeId"]);
+            a.DataNascimento = Convert.ToDateTime(registro["dataNascimento"]);
+
+            if (registro["mensalidade"] != DBNull.Value)
+                a.Mensalidade = Convert.ToDouble(registro["mensalidade"]);
+
+            return a;
+        }
         public void Inserir(AlunoViewModel aluno)
         { /*
             string sql =
@@ -28,21 +56,6 @@ namespace CadAlunoMVC.DAO
             */
             HelperDAO.ExecutaProc("spAlteraAluno", CriaParametros(aluno));
         }
-        private SqlParameter[] CriaParametros(AlunoViewModel aluno)
-        {
-            SqlParameter[] parametros = new SqlParameter[5];
-            parametros[0] = new SqlParameter("id", aluno.Id);
-            parametros[1] = new SqlParameter("nome", aluno.Nome);
-
-            if (aluno.Mensalidade == null)
-                parametros[2] = new SqlParameter("mensalidade", DBNull.Value);
-            else
-                parametros[2] = new SqlParameter("mensalidade", aluno.Mensalidade);
-
-            parametros[3] = new SqlParameter("cidadeId", aluno.CidadeId);
-            parametros[4] = new SqlParameter("dataNascimento", aluno.DataNascimento);
-            return parametros;
-        }
         public void Excluir(int id)
         { /*
             string sql = "delete alunos where id =" + id;
@@ -54,19 +67,6 @@ namespace CadAlunoMVC.DAO
                 new SqlParameter("id", id)
             };
             HelperDAO.ExecutaProc("spExcluiAluno", p);
-        }
-        private AlunoViewModel MontaAluno(DataRow registro)
-        {
-            AlunoViewModel a = new AlunoViewModel();
-            a.Id = Convert.ToInt32(registro["id"]);
-            a.Nome = registro["nome"].ToString();
-            a.CidadeId = Convert.ToInt32(registro["cidadeId"]);
-            a.DataNascimento = Convert.ToDateTime(registro["dataNascimento"]);
-
-            if (registro["mensalidade"] != DBNull.Value)
-                a.Mensalidade = Convert.ToDouble(registro["mensalidade"]);
-
-            return a;
         }
         public AlunoViewModel Consulta(int id)
         { /*
@@ -88,7 +88,6 @@ namespace CadAlunoMVC.DAO
             else
                 return MontaAluno(tabela.Rows[0]);
         }
-
         public List<AlunoViewModel> Listagem()
         { /*
             List<AlunoViewModel> lista = new List<AlunoViewModel>();
