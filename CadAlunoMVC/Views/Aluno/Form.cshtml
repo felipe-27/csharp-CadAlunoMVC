@@ -22,22 +22,28 @@
     {
         <input type="number" Name="Id" value="@Model.Id" class="form-control disabled" readonly />
     }
+    <span asp-validation-for="Id" class="text-danger"></span>
+    <br />
 
     <label for="Nome" class="control-label">Nome do aluno</label>
     <input type="text" Name="Nome" value="@Model.Nome" />
+    <span asp-validation-for="Nome" class="text-danger"></span>
     <br />
 
     <label for="Mensalidade" class="control-label">Mensalidade</label>
     <input type="text" Name="Mensalidade" value="@Model.Mensalidade" />
+    <span asp-validation-for="Mensalidade" class="text-danger"></span>
     <br />
 
     <label for="DataNascimento" class="control-label">Data de nascimento</label>
     <input type="date" Name="DataNascimento" value="@Model.DataNascimento.ToString("yyyy-MM-dd")" />
+    <span asp-validation-for="DataNascimento" class="text-danger"></span>
     <!-- type="date": mostra um calendário na área de seleção -->
     <br />
 
     <label for="CidadeId" class="control-label">Código da cidade</label>
     <input type="number" Name="CidadeId" value="@Model.CidadeId" />
+    <span asp-validation-for="CidadeId" class="text-danger"></span>
     <br />
 
     <input type="submit" class="btn btn-success" value="Salvar dados" />
