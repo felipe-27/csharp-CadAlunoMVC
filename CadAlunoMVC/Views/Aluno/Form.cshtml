@@ -42,7 +42,7 @@
     <br />
 
     <label for="CidadeId" class="control-label">Código da cidade</label>
-    <input type="number" Name="CidadeId" value="@Model.CidadeId" />
+    <select asp-for="CidadeId" asp-items="ViewBag.Cidades" class="form-control"> </select>
     <span asp-validation-for="CidadeId" class="text-danger"></span>
     <br />
 
