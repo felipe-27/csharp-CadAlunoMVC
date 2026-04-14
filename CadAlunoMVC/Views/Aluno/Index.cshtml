@@ -28,8 +28,9 @@
         <th>RA</th>
         <th>Nome</th>
         <th>Data de nascimento</th>
-        <th>Código da Cidade</th>
         <th>Mensalidade</th>
+        <th>Código da Cidade</th>
+        <th>Nome da Cidade</th>
 
     </tr>
 
@@ -46,10 +47,12 @@
             <td>@aluno.Id</td>
             <td>@aluno.Nome</td>
             <td>@aluno.DataNascimento.ToShortDateString()</td>
-            <td>@aluno.CidadeId</td>
 
             @{/*   "Mensalidade?"  ->  se Mensalidade != null, executa o comando à frente */}
             <td>@aluno.Mensalidade?.ToString("c")</td>
+
+            <td>@aluno.CidadeId</td>
+            <td>@aluno.NomeCidade</td>
 
         </tr>
     }

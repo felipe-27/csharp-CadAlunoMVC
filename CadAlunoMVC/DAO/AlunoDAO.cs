@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using System;
+using System.Reflection.Emit;
 
 namespace CadAlunoMVC.DAO
 {
@@ -33,6 +34,9 @@ namespace CadAlunoMVC.DAO
 
             if (registro["mensalidade"] != DBNull.Value)
                 a.Mensalidade = Convert.ToDouble(registro["mensalidade"]);
+
+            if (registro.Table.Columns.Contains("NomeCidade"))
+                a.NomeCidade = registro["NomeCidade"].ToString();
 
             return a;
         }
@@ -97,9 +101,14 @@ namespace CadAlunoMVC.DAO
                 lista.Add(MontaAluno(registro));
             return lista;
             */
+            var p = new SqlParameter[]
+            {
+                new SqlParameter("tabela", "alunos"),
+                new SqlParameter("ordem", "1")
+            };
 
             List<AlunoViewModel> lista = new List<AlunoViewModel>();
-            DataTable tabela = HelperDAO.ExecutaProcSelect("spListagemAlunos", null);
+            DataTable tabela = HelperDAO.ExecutaProcSelect("spListagemAlunos", p);
 
             foreach (DataRow registro in tabela.Rows)
                 lista.Add(MontaAluno(registro));
@@ -121,3 +130,24 @@ namespace CadAlunoMVC.DAO
         }
     }
 }
+
+
+/*
+ALTER procedure [dbo].[spListagemAlunos]
+(
+@ordem varchar(max)
+)
+as
+begin
+select Alunos.*, Cidades.Nome as NomeCidade
+from alunos
+Left join cidades on alunos.CidadeId = cidades.id
+order by 
+	CASE @ordem
+		when 'NomeCidade' then cidades.nome
+		when 'nome' then Alunos.nome
+		when 'DataNascimento' then Alunos.DataNascimento
+		else 1
+	end
+end
+ */
